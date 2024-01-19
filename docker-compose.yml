@@ -3,7 +3,6 @@ version: '3'
 
 volumes:
   pg_data:
-  # Новый volume — для статических файлов
   static:
 
 services:
@@ -15,7 +14,6 @@ services:
   backend:
     build: ./backend/
     env_file: .env
-    # Тут подключаем volume к backend
     volumes:
       - static:/backend_static
   frontend:
@@ -25,8 +23,8 @@ services:
     volumes:
       - static:/frontend_static/
   gateway:
+    env_file: .env
     build: ./gateway/
-    # А тут подключаем volume со статикой к gateway
     volumes:
       - static:/staticfiles/
     ports:
